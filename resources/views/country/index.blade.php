@@ -25,34 +25,39 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered m-0">
-                            <thead>
-                                <tr>
-                                    <th>Sr. No.</th>
-                                    <th>Name</th>
-                                    <th>Capital</th>
-                                    <th>Currency</th>
-                                    <th>Continent</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
+                        {{-- @dump($countries) --}}
+                        @if (count($countries) > 0)
+                            <table class="table table-bordered m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th>Name</th>
+                                        <th>Capital</th>
+                                        <th>Currency</th>
+                                        <th>Continent</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Pakistan</td>
-                                    <td>Washington DC</td>
-                                    <td>PKR</td>
-                                    <td>Asia</td>
-                                    <td>
-                                        <a href="" class="btn btn-primary">Edit</a>
-                                        <a href="" class="btn btn-danger">Delete</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="alert alert-info m-0">No record found!</div>
+                                <tbody>
+                                    @foreach ($countries as $country)
+                                        <tr>
+                                            <td>1</td>
+                                            <td>{{ $country->name }}</td>
+                                            <td>{{ $country->capital }}</td>
+                                            <td>{{ $country->currency }}</td>
+                                            <td>{{ $country->continent }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-primary">Edit</a>
+                                                <a href="" class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="alert alert-info m-0">No record found!</div>
+                        @endif
                     </div>
                 </div>
             </div>

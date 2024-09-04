@@ -12,7 +12,10 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return view('country.index');
+        // dd(Country::all());
+        return view('country.index', [
+            'countries' => Country::all(),
+        ]);
     }
 
     /**
@@ -20,7 +23,18 @@ class CountryController extends Controller
      */
     public function create()
     {
-        return view('country.create');
+        $continents = [
+            "Asia",
+            "Africa",
+            "North America",
+            "South America",
+            "Antarctica",
+            "Europe",
+            "Australia",
+        ];
+        return view('country.create', [
+            'continents' => $continents
+        ]);
     }
 
     /**
@@ -32,8 +46,38 @@ class CountryController extends Controller
             'name' => ['required', 'string'],
             'capital' => ['required', 'string'],
             'currency' => ['required', 'string'],
+            'continent' => ['required', 'string'],
         ]);
-        dd($request->all());
+
+        // $country_obj = new Country();
+        // $country_obj->name = $request->name;
+        // $country_obj->capital = $request->capital;
+        // $country_obj->currency = $request->currency;
+        // $country_obj->continent = $request->continent;
+        // if($country_obj->save()) {
+        //     die('Created');
+        // } else {
+        //     die('Failed');
+        // }
+
+        // $data = [
+        //     'name' => $request->name,
+        //     'capital' => $request->capital,
+        //     'currency' => $request->currency,
+        //     'continent' => $request->continent,
+        // ];
+
+        // if (Country::create($data)) {
+        //     die('Created');
+        // } else {
+        //     die('Failed');
+        // }
+
+        if (Country::create($request->all())) {
+            return redirect()->back()->with(['success' => 'Magic has been spelled!']);
+        } else {
+            return redirect()->back()->with(['failure' => 'Magic has failed to spell!']);
+        }
     }
 
     /**

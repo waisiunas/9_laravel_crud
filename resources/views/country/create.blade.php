@@ -25,13 +25,30 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @dump($errors)
+                        @session('success')
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ $value }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endsession
+
+                        @session('failure')
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ $value }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endsession
+                        {{-- @dump($errors) --}}
+                        {{-- @dump($continents) --}}
                         <form action="{{ route('country.create') }}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" id="name" name="name" placeholder="Country name!"
-                                    class="form-control " value="{{ old('name') }}">
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    value="{{ old('name') }}">
 
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>
@@ -41,7 +58,8 @@
                             <div class="mb-3">
                                 <label for="capital" class="form-label">Capital</label>
                                 <input type="text" id="capital" name="capital" placeholder="Country capital!"
-                                    class="form-control form-control " value="{{ old('capital') }}">
+                                    class="form-control @error('capital') is-invalid @enderror"
+                                    value="{{ old('capital') }}">
 
                                 @error('capital')
                                     <div class="text-danger">{{ $message }}</div>
@@ -51,9 +69,26 @@
                             <div class="mb-3">
                                 <label for="currency" class="form-label">Currency</label>
                                 <input type="text" id="currency" name="currency" placeholder="Country currency!"
-                                    class="form-control form-control " value="{{ old('currency') }}">
+                                    class="form-control @error('currency') is-invalid @enderror"
+                                    value="{{ old('currency') }}">
 
                                 @error('currency')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="continent" class="form-label">Continent</label>
+                                <select id="continent" name="continent"
+                                    class="form-select @error('continent') is-invalid @enderror">
+                                    <option value="">Select a continent!</option>
+                                    @foreach ($continents as $continent)
+                                        <option value="{{ $continent }}" @selected($continent == old('continent'))>
+                                            {{ $continent }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('continent')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
