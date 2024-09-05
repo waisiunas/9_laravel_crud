@@ -81,19 +81,23 @@ class CountryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Country $country)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Country $country)
     {
-        //
+        $continents = [
+            "Asia",
+            "Africa",
+            "North America",
+            "South America",
+            "Antarctica",
+            "Europe",
+            "Australia",
+        ];
+        return view('country.edit', [
+            'continents' => $continents,
+            'country' => $country,
+        ]);
     }
 
     /**
@@ -101,7 +105,18 @@ class CountryController extends Controller
      */
     public function update(Request $request, Country $country)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string'],
+            'capital' => ['required', 'string'],
+            'currency' => ['required', 'string'],
+            'continent' => ['required', 'string'],
+        ]);
+
+        if ($country->update($request->all())) {
+            return redirect()->back()->with(['success' => 'Magic has been spelled!']);
+        } else {
+            return redirect()->back()->with(['failure' => 'Magic has failed to spell!']);
+        }
     }
 
     /**
@@ -109,6 +124,10 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        //
+        if ($country->delete()) {
+            return redirect()->back()->with(['success' => 'Magic has been spelled!']);
+        } else {
+            return redirect()->back()->with(['failure' => 'Magic has failed to spell!']);
+        }
     }
 }

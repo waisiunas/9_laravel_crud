@@ -25,6 +25,21 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @session('success')
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ $value }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endsession
+
+                        @session('failure')
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ $value }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endsession
                         {{-- @dump($countries) --}}
                         @if (count($countries) > 0)
                             <table class="table table-bordered m-0">
@@ -48,8 +63,14 @@
                                             <td>{{ $country->currency }}</td>
                                             <td>{{ $country->continent }}</td>
                                             <td>
-                                                <a href="" class="btn btn-primary">Edit</a>
-                                                <a href="" class="btn btn-danger">Delete</a>
+                                                <a href="{{ route('country.edit', $country) }}"
+                                                    class="btn btn-primary">Edit</a>
+                                                <form action="{{ route('country.destroy', $country) }}" method="post"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                </form>
+                                                {{-- <a href="{{ route('country.destroy', $country) }}" class="btn btn-danger">Delete</a> --}}
                                             </td>
                                         </tr>
                                     @endforeach
