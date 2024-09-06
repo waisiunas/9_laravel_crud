@@ -68,6 +68,7 @@
                                                 <form action="{{ route('country.destroy', $country) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
+                                                    @method('DELETE')
                                                     <input type="submit" value="Delete" class="btn btn-danger">
                                                 </form>
                                                 {{-- <a href="{{ route('country.destroy', $country) }}" class="btn btn-danger">Delete</a> --}}

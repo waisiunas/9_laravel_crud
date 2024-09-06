@@ -45,6 +45,7 @@
                         {{-- @dump($country) --}}
                         <form action="{{ route('country.edit', $country) }}" method="post">
                             @csrf
+                            @method('PATCH')
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" id="name" name="name" placeholder="Country name!"
